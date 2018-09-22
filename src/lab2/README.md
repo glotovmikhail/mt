@@ -49,24 +49,24 @@ T   -- Унарное выражение
 
 ##### FIRST:
 ```
-Ex . . . var not (
-Ex' . .. _ xor
-Eo . . . var not (
-Eo' . .. _ or
-Ea . . . var not (
-Ea' . .. _ and
-T . . .. var not (
+Ex       var not (
+Ex'      _ xor
+Eo       var not (
+Eo'      _ or
+Ea       var not (
+Ea'      _ and
+T        var not (
 ```
 
 ##### FOLLOW
 ```
-Ex . . . $ )
-Ex' . .. $ )
-Eo . . . $ ) xor
-Eo' . .. $ ) xor
-Ea . . . $ ) xor or
-Ea' . .. $ ) xor or
-T . . .. $ ) xor and
+Ex       $ )
+Ex'      $ )
+Eo       $ ) xor
+Eo'      $ ) xor
+Ea       $ ) xor or
+Ea'      $ ) xor or
+T        $ ) xor and
 ```
 
 ### Тесты
@@ -78,7 +78,7 @@ T . . .. $ ) xor and
 #### Проверка скобок и пробелов
 `a and (b or c)` \
 `(((a or (((b)) and c))))` \
-Пробелы в md трутся((((
+`  b    or (  a    and   (    not                geez)        and \na and c \t)      `
 
 #### Проверка унарных операций
 `not not a and not (not b or c and (not not e)))`
