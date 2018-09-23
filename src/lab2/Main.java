@@ -30,9 +30,6 @@ public class Main {
         graph.addAttribute("ui.quality");
         graph.addAttribute("ui.antialias");
 
-        Viewer viewer = graph.display();
-        HierarchicalLayout layout = new HierarchicalLayout();
-        viewer.enableAutoLayout(layout);
 
 
         Node root = Parser.parse(tests[3]);
@@ -44,8 +41,12 @@ public class Main {
         rootNode.setAttribute("ui.color", 0.5);
 
 
-        viewer.getDefaultView().getCamera().resetView();
-        graph.addAttribute("ui.screenshot", "./screenshot.png");
+        Viewer viewer = graph.display();
+        HierarchicalLayout layout = new HierarchicalLayout();
+        layout.shake();
+        viewer.enableAutoLayout(layout);
+//        viewer.getDefaultView().getCamera().resetView();
+//        graph.addAttribute("ui.screenshot", "./screenshot.png");
     }
 
     private static org.graphstream.graph.Node print(Node parserNode, String tab) {
