@@ -27,7 +27,6 @@
 
 #### bool statements
 ```
-
 ==
 !=
 <=
