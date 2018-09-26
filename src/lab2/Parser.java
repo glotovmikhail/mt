@@ -8,6 +8,7 @@ class Node {
         Ex1, Ex2,
         Eo1, Eo2,
         Ea1, Ea2,
+        Es1, Es2,
         T, TERM
     }
     Integer id;
@@ -102,7 +103,7 @@ class Parser {
             case NOT:
             case LPAREN:
             case BOOL:
-                answer.children.add(T(a));
+                answer.children.add(Es1(a));
                 answer.children.add(Ea2(a));
                 break;
             default:
@@ -117,7 +118,7 @@ class Parser {
             case AND:
                 answer.children.add(new Node(Node.NodeType.TERM, "and"));
                 a.nextToken();
-                answer.children.add(T(a));
+                answer.children.add(Es1(a));
                 answer.children.add(Ea2(a));
                 break;
             case END:
@@ -127,6 +128,42 @@ class Parser {
                 break;
             default:
                 throw new ParseException("Ea\'", a.currToken());
+        }
+        return answer;
+    }
+
+    private static Node Es1(LexicalAnalyzer a) throws ParseException, LexicalException {
+        Node answer = new Node(Node.NodeType.Es1, "expSDL");
+        switch (a.currToken()) {
+            case NOT:
+            case LPAREN:
+            case BOOL:
+                answer.children.add(T(a));
+                answer.children.add(Es2(a));
+                break;
+            default:
+                throw new ParseException("Es", a.currToken());
+        }
+        return answer;
+    }
+
+    private static Node Es2(LexicalAnalyzer a) throws ParseException, LexicalException {
+        Node answer = new Node(Node.NodeType.Es2, "expSDL\'");
+        switch (a.currToken()) {
+            case SHL:
+                answer.children.add(new Node(Node.NodeType.TERM, "sdl"));
+                a.nextToken();
+                answer.children.add(T(a));
+                answer.children.add(Es2(a));
+                break;
+            case AND:
+            case END:
+            case RPAREN:
+            case XOR:
+            case OR:
+                break;
+            default:
+                throw new ParseException("Es\'", a.currToken());
         }
         return answer;
     }
@@ -168,6 +205,8 @@ class ParseException extends Exception {
         switch (t) {
             case NOT:
                 return "NOT";
+            case SHL:
+                return "SDL";
             case AND:
                 return "AND";
             case OR:

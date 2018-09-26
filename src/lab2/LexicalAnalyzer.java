@@ -2,7 +2,7 @@ package lab2;
 
 enum Token {
     NOT, AND, OR, XOR,
-    LPAREN, RPAREN, END, BOOL
+    LPAREN, RPAREN, END, BOOL, SHL
 }
 
 class LexicalAnalyzer {
@@ -64,6 +64,11 @@ class LexicalAnalyzer {
                     currentToken = Token.XOR;
                     return;
                 }
+            case 's':
+                if (eat("shl")) {
+                    currentToken = Token.SHL;
+                    return;
+                }
             default:
                 if (eatVal()) {
                     currentToken = Token.BOOL;
@@ -86,7 +91,7 @@ class LexicalAnalyzer {
     private Boolean eatVal() {
         char c;
         Boolean flag = false;
-        currBool="";
+        currBool = "";
         while ((dataSize > pointer) && ((c = data.charAt(pointer)) >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')) {
             currBool += data.charAt(pointer);//
             pointer++;

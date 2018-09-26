@@ -18,5 +18,14 @@ int main() {
 	} else {
 		printf("%s", a);
 	}
+	for (i = 1; i <= 5; i++)
+	{
+		printf("%s", a);
+		printf("%s", b);
+	}
+	do {
+		printf("%d", z);
+		printf("%s", a);
+	} while (!(b >= 1));
 	return 0;
 }

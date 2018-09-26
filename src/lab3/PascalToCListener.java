@@ -171,6 +171,26 @@ public interface PascalToCListener extends ParseTreeListener {
 	 */
 	void exitEmptyStatement(PascalToCParser.EmptyStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PascalToCParser#forStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterForStatement(PascalToCParser.ForStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PascalToCParser#forStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitForStatement(PascalToCParser.ForStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PascalToCParser#repeatStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterRepeatStatement(PascalToCParser.RepeatStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PascalToCParser#repeatStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitRepeatStatement(PascalToCParser.RepeatStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PascalToCParser#ifStatement}.
 	 * @param ctx the parse tree
 	 */

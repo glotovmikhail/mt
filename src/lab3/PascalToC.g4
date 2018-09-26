@@ -68,6 +68,7 @@ programBody : statements;
 statements : statement ( SEMI statement )*;
 statement : ({offset();} singleStatement {append(";\n");} |
             emptyStatement | {offset();} ifStatement      |
+            {offset();} repeatStatement | forStatement |
             {offset();} whileStatement | {offset();} compoundStatement |
             ) ;
 
@@ -97,6 +98,29 @@ writeStatement : (WRITE {ln = false;} | WRITELN {ln = true;})
                          inWrite = false; append(")");};
 
 emptyStatement : ;
+
+forStatement locals [String iterator = "", String value = ""] :
+                                             FOR LPAREN {offset(); append("for (");} factor {$iterator = $factor.text;}
+                                             ASSIGN {append(" = ");} expression {append("; ");}
+                                             (TO {down = false;} |
+                                             DOWNTO {down = true;}) NUM_INT {$value = $NUM_INT.text;
+                                                 if (down) {
+                                                    append($iterator + " >= " + $value + "; ");
+                                                    append($iterator + "--)");
+                                                 } else {
+                                                    append($iterator + " <= " + $value + "; ");
+                                                    append($iterator + "++)");
+                                                 }
+                                             } ((DO {append("\n"); offset();}
+                                             compoundStatement ) |
+                                                (DO {append(" {\n"); curOffset++; offset();}
+                                                singleStatement
+                                                SEMI {curOffset--; offset(); append(";\n");} END DOT {append("}\n");}));
+
+
+
+repeatStatement : REPEAT {append("do {"); curOffset++; append("\n");} statements {curOffset--;}
+                  UNTIL LPAREN {offset(); append("} while (!(");} expression {append("));\n");} RPAREN SEMI;
 
 ifStatement : IF {append("if ("); curOffset++;} expression THEN {append(") {\n");} statement {curOffset--;} (ELSE {offset();
                                                                                      append ("} else {\n"); curOffset++;}
@@ -226,14 +250,13 @@ DOT             : '.' ;
 DOTDOT          : '..';
 LCURLY          : '{' ;
 RCURLY          : '}' ;
-IDENT  :  ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+IDENT           :  ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 
 
 QUOTE : '\'';
 
 
-NUM_INT
-  : ('0'..'9')+;
+NUM_INT : ('0'..'9')+;
 
 WS : (' ' | '\t' | '\n' | '\r')+
      -> channel(HIDDEN)

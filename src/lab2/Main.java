@@ -13,7 +13,8 @@ public class Main {
     private static PrintWriter p;
 
     public static void main(String[] args) throws FileNotFoundException, LexicalException, ParseException {
-        String tests[] ={"a or b or c",
+        String tests[] ={"b shl c",
+                "a or b or c",
                 "a xor b or c",
                 "a or b and c",
                 "a or (b and c)",
@@ -32,7 +33,7 @@ public class Main {
 
 
 
-        Node root = Parser.parse(tests[3]);
+        Node root = Parser.parse(tests[0]);
         p = new PrintWriter(new File("output.txt"));
         org.graphstream.graph.Node rootNode = print(root, "");
         p.close();

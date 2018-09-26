@@ -13,8 +13,19 @@ begin
       i := i - 1;
       write(i);
    end;
+
    if x > z then
       write('abc')
    else
       write(a);
+
+   for i:=1 to 5 do begin
+     write(a);
+     write(b);
+   end;
+
+   repeat
+      write(z);
+      write(a);
+   until (b >= 1);
 end.
