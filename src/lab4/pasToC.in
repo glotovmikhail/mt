@@ -1,0 +1,96 @@
+@header {
+package lab4.pasToC;
+
+import lab4.Tree;
+}
+
+@main {
+        PrintWriter p = new PrintWriter(new FileOutputStream(new File("src/lab4/pasToC/out.c")));
+        p.write(result);
+        p.close();
+}
+
+start -> String
+        : VAR vars[{""}] BEGIN code END DOT {return vars.get(0) + "\nint main() {\n" + code.get(0) + "\n}";}
+        ;
+
+code -> String
+        : statements[{""}] {return statements.get(0);}
+        ;
+
+statements[String cur] -> String
+        : statement statements[{cur + statement.get(0)}] {return statements.get(0);}
+        | {return cur;}
+        ;
+
+statement -> String
+        : writestate SEMI {return writestate.get(0) + ";\n";}
+        | assignstate SEMI {return assignstate.get(0) + ";\n";}
+        ;
+
+writestate -> String
+        : WRITE LPAREN variable RPAREN {return "printf(\"%d\", " + variable.get(0) + ")";}
+        ;
+
+assignstate -> String
+        : variable COLON RAVNO number[{0}] {return variable.get(0) + " = " + number.get(0);}
+        ;
+
+vars [String cur] -> String
+        : line vars[{cur + line.get(0)}] {return vars.get(0);}
+        | {return cur;}
+        ;
+
+line -> String
+        : declvariable type SEMI {return type.get(0) + " " + declvariable.get(0) + ";\n";}
+        ;
+
+variable -> String
+        : word[{""}] {return word.get(0);}
+        ;
+
+declvariable -> String
+        : word[{""}] COLON {return word.get(0);}
+        ;
+
+word [String input] -> String
+        : IDENT word[{input + IDENT.get(0)}] {return word.get(0);}
+        | {return input;}
+        ;
+
+number[Integer i] -> Integer
+    : NUMBER number_prime[{10*i + Integer.parseInt(NUMBER.get(0))}] {return number_prime.get(0);}
+    ;
+
+number_prime[Integer i] -> Integer
+    : {return i;}
+    | number[{i}] {return number.get(0);}
+    ;
+
+type -> String
+        : STRING {return "char*";}
+        | INTEGER {return "int";}
+        ;
+
+
+LPAREN  : '(';
+RPAREN  : ')';
+BEGIN   : 'begin';
+END     : 'end';
+DOT     : '.';
+SEMI    : ';';
+COMMA   : ',';
+COLON   : ':';
+RAVNO   : '=';
+WRITE   : 'write';
+READ    : 'read';
+STRING  : 'string';
+INTEGER : 'integer';
+VAR     : 'var';
+
+PLUS    : '+';
+MINUS   : '-';
+
+IDENT   : 'a' | 'c' | 'd' | 'f' | 'g' | 'h' | 'j' | 'k' | 'l' | 'm' | 'n';
+
+NUMBER : '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';

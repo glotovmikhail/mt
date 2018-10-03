@@ -1,0 +1,31 @@
+graph g {
+	"723074861Ex0" [shape=circle, style=filled, fillcolor="lightblue", label="Ex"];
+	"895328852Eo1" [shape=circle, style=filled, fillcolor="lightblue", label="Eo"];
+	"1304836502Ea2" [shape=circle, style=filled, fillcolor="lightblue", label="Ea"];
+	"225534817TERM3" [shape=circle, style=filled, fillcolor="lightblue", label="TERM"];
+	"1878246837b4" [shape=circle, style=filled, fillcolor="lightblue", label="b"];
+	"225534817TERM3" -- "1878246837b4";
+	{ rank=same"1878246837b4" }
+	"929338653AND3" [shape=circle, style=filled, fillcolor="lightblue", label="AND"];
+	"1259475182and4" [shape=circle, style=filled, fillcolor="lightblue", label="and"];
+	"1300109446TERM4" [shape=circle, style=filled, fillcolor="lightblue", label="TERM"];
+	"1020371697d5" [shape=circle, style=filled, fillcolor="lightblue", label="d"];
+	"1300109446TERM4" -- "1020371697d5";
+	{ rank=same"1020371697d5" }
+	"789451787Ea'4" [shape=circle, style=filled, fillcolor="lightblue", label="Ea'"];
+	"929338653AND3" -- "1259475182and4";
+	"929338653AND3" -- "1300109446TERM4";
+	"929338653AND3" -- "789451787Ea'4";
+	{ rank=same"1259475182and4","1300109446TERM4","789451787Ea'4" }
+	"1304836502Ea2" -- "225534817TERM3";
+	"1304836502Ea2" -- "929338653AND3";
+	{ rank=same"225534817TERM3","929338653AND3" }
+	"1950409828Eo'2" [shape=circle, style=filled, fillcolor="lightblue", label="Eo'"];
+	"895328852Eo1" -- "1304836502Ea2";
+	"895328852Eo1" -- "1950409828Eo'2";
+	{ rank=same"1304836502Ea2","1950409828Eo'2" }
+	"1229416514Ex'1" [shape=circle, style=filled, fillcolor="lightblue", label="Ex'"];
+	"723074861Ex0" -- "895328852Eo1";
+	"723074861Ex0" -- "1229416514Ex'1";
+	{ rank=same"895328852Eo1","1229416514Ex'1" }
+}

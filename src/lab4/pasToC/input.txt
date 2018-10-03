@@ -1,0 +1,6 @@
+var
+    d : integer;
+begin
+    d := 1;
+    write(d);
+end.

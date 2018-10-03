@@ -1,0 +1,6 @@
+package lab4.pasToC;
+
+import lab4.Tree;
+public enum Token {
+	COMMA, NUMBER, VAR, LPAREN, DOT, SEMI, EPS, COLON, RAVNO, RPAREN, BEGIN, WRITE, MINUS, READ, IDENT, STRING, END, EOF, INTEGER, PLUS
+}
