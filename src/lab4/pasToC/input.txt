@@ -1,6 +1,7 @@
 var
-    d : integer;
+    dfgsdf : integer;
+    fvsdfvbsdg : integer;
 begin
-    d := 1;
-    write(d);
+    sdfgsdf := 123124;
+    fdgdfgsdf := 444;
 end.

@@ -5,9 +5,9 @@ import lab4.Tree;
 }
 
 @main {
-BufferedWriter bw = new BufferedWriter(new FileWriter("src/lab4/pascal/pascal.dot"));
-result.printTree(0, bw);
-bw.flush();
+        BufferedWriter bw = new BufferedWriter(new FileWriter("src/lab4/pascal/pascal.dot"));
+        result.printTree(0, bw);
+        bw.flush();
 }
 
 start -> Tree   : eo1 ex2 {return new Tree("Ex", eo1.get(0), ex2.get(0));}
@@ -32,13 +32,8 @@ ea2 -> Tree : AND t ea2 {return new Tree("AND", new Tree("and"), t.get(0), ea2.g
             ;
 
 t -> Tree   : NOT t {return new Tree("NOT", new Tree("not"), t.get(0));}
-            | word[{""}] {return new Tree("TERM", new Tree(word.get(0)));}
+            | IDENT {return new Tree("TERM", new Tree(IDENT.get(0)));}
             | LPAREN start RPAREN {return new Tree("F", new Tree("("), start.get(0), new Tree(")"));}
-            ;
-
-word [String input] -> String
-            : TERM word[{input + TERM.get(0)}] {return word.get(0);}
-            | {return input;}
             ;
 
 LPAREN  : '('   ;
@@ -47,4 +42,5 @@ XOR     : 'xor' ;
 OR      : 'or'  ;
 AND     : 'and' ;
 NOT     : 'not' ;
-TERM    : 'b' | 'c' | 'd' | 'e' | 'f';
+IDENT   : '[a-zA-Z][a-zA-Z0-9]*';
+NUMBER  : '[0-9]';

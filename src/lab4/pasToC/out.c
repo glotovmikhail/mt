@@ -1,7 +1,7 @@
-int d;
+int dfgsdf;
+int fvsdfvbsdg;
 
 int main() {
-d = 1;
-printf("%d", d);
-
+	sdfgsdf = 123124;
+fdgdfgsdf = 444;
 }

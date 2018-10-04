@@ -28,11 +28,14 @@ public class pascalParser {
 
 				return new Tree("Ea", t.get(0), ea2.get(0));
 			}
-			case OR: {
-			
-			}
-			case AND: {
-			
+			case IDENT: {
+				List<Tree> t = new ArrayList<>();
+				List<Tree> ea2 = new ArrayList<>();
+				t.add(t());
+
+				ea2.add(ea2());
+
+				return new Tree("Ea", t.get(0), ea2.get(0));
 			}
 			case LPAREN: {
 				List<Tree> t = new ArrayList<>();
@@ -42,24 +45,6 @@ public class pascalParser {
 				ea2.add(ea2());
 
 				return new Tree("Ea", t.get(0), ea2.get(0));
-			}
-			case XOR: {
-			
-			}
-			case TERM: {
-				List<Tree> t = new ArrayList<>();
-				List<Tree> ea2 = new ArrayList<>();
-				t.add(t());
-
-				ea2.add(ea2());
-
-				return new Tree("Ea", t.get(0), ea2.get(0));
-			}
-			case RPAREN: {
-			
-			}
-			case EOF: {
-			
 			}
 			default:
 				throw new AssertionError();
@@ -81,11 +66,15 @@ public class pascalParser {
 
 				return new Tree("NOT", new Tree("not"), t.get(0));
 			}
-			case OR: {
-			
-			}
-			case AND: {
-			
+			case IDENT: {
+				List<String> IDENT = new ArrayList<>();
+				if (lex.curToken().toString().equals("IDENT")) {
+					IDENT.add(lex.curString());
+				} else {
+					throw new AssertionError("IDENT expected, instead of " + lex.curToken().toString());
+				}
+				lex.nextToken();
+				return new Tree("TERM", new Tree(IDENT.get(0)));
 			}
 			case LPAREN: {
 				List<String> LPAREN = new ArrayList<>();
@@ -107,21 +96,6 @@ public class pascalParser {
 				lex.nextToken();
 				return new Tree("F", new Tree("("), start.get(0), new Tree(")"));
 			}
-			case XOR: {
-			
-			}
-			case TERM: {
-				List<String> word = new ArrayList<>();
-				word.add(word(""));
-
-				return new Tree("TERM", new Tree(word.get(0)));
-			}
-			case RPAREN: {
-			
-			}
-			case EOF: {
-			
-			}
 			default:
 				throw new AssertionError();
 		}
@@ -138,10 +112,7 @@ public class pascalParser {
 
 				return new Tree("Eo", ea1.get(0), eo2.get(0));
 			}
-			case OR: {
-			
-			}
-			case AND: {
+			case IDENT: {
 				List<Tree> ea1 = new ArrayList<>();
 				List<Tree> eo2 = new ArrayList<>();
 				ea1.add(ea1());
@@ -158,24 +129,6 @@ public class pascalParser {
 				eo2.add(eo2());
 
 				return new Tree("Eo", ea1.get(0), eo2.get(0));
-			}
-			case XOR: {
-			
-			}
-			case TERM: {
-				List<Tree> ea1 = new ArrayList<>();
-				List<Tree> eo2 = new ArrayList<>();
-				ea1.add(ea1());
-
-				eo2.add(eo2());
-
-				return new Tree("Eo", ea1.get(0), eo2.get(0));
-			}
-			case RPAREN: {
-			
-			}
-			case EOF: {
-			
 			}
 			default:
 				throw new AssertionError();
@@ -228,16 +181,7 @@ public class pascalParser {
 
 				return new Tree("Ex", eo1.get(0), ex2.get(0));
 			}
-			case OR: {
-				List<Tree> eo1 = new ArrayList<>();
-				List<Tree> ex2 = new ArrayList<>();
-				eo1.add(eo1());
-
-				ex2.add(ex2());
-
-				return new Tree("Ex", eo1.get(0), ex2.get(0));
-			}
-			case AND: {
+			case IDENT: {
 				List<Tree> eo1 = new ArrayList<>();
 				List<Tree> ex2 = new ArrayList<>();
 				eo1.add(eo1());
@@ -254,24 +198,6 @@ public class pascalParser {
 				ex2.add(ex2());
 
 				return new Tree("Ex", eo1.get(0), ex2.get(0));
-			}
-			case XOR: {
-			
-			}
-			case TERM: {
-				List<Tree> eo1 = new ArrayList<>();
-				List<Tree> ex2 = new ArrayList<>();
-				eo1.add(eo1());
-
-				ex2.add(ex2());
-
-				return new Tree("Ex", eo1.get(0), ex2.get(0));
-			}
-			case RPAREN: {
-			
-			}
-			case EOF: {
-			
 			}
 			default:
 				throw new AssertionError();
@@ -304,41 +230,6 @@ public class pascalParser {
 			}
 			case EOF: {
 				return new Tree("Eo\'");
-			}
-			default:
-				throw new AssertionError();
-		}
-	}
-
-	private String word(String input) throws ParseException, IOException {
-		switch (lex.curToken()) {
-			case OR: {
-				return input;
-			}
-			case AND: {
-				return input;
-			}
-			case XOR: {
-				return input;
-			}
-			case TERM: {
-				List<String> TERM = new ArrayList<>();
-				List<String> word = new ArrayList<>();
-				if (lex.curToken().toString().equals("TERM")) {
-					TERM.add(lex.curString());
-				} else {
-					throw new AssertionError("TERM expected, instead of " + lex.curToken().toString());
-				}
-				lex.nextToken();
-				word.add(word(input + TERM.get(0)));
-
-				return word.get(0);
-			}
-			case RPAREN: {
-				return input;
-			}
-			case EOF: {
-				return input;
 			}
 			default:
 				throw new AssertionError();

@@ -24,7 +24,7 @@ public class pascalLexer {
 		curPos++;
 		try {
 			curChar = is.read();
-			if (isBlank(curChar)) nextChar();		} catch (IOException e) {
+		} catch (IOException e) {
 			throw new ParseException(e.getMessage(), curPos);
 		}
 	}
@@ -41,122 +41,58 @@ public class pascalLexer {
 		return curString;
 	}
 
+	public String eat() throws IOException, ParseException {
+	    String ans = "";
+        if (curChar == -1) return "@eof";
+        if (curChar == '(' || curChar == ')' || curChar == ';' || curChar == '.') {
+			ans = "" + (char) curChar;
+			nextChar();
+            return ans;
+        }
+	    while (!isBlank(curChar)) {
+	        if (curChar == '(' || curChar == ')' || curChar == ';' || curChar == '.' || curChar == -1) break;
+	        ans += (char) curChar;
+	        nextChar();
+        }
+        while (isBlank(curChar)) {
+	        nextChar();
+        }
+		if (ans.equals("")) return eat();
+	    return ans;
+    }
+
 	public void nextToken() throws ParseException, IOException {
-		curString = "";
-		if (curChar == -1) {
+		curString = eat();
+		if (curString.equals("@eof")) {
 			curToken = Token.EOF;
 			return;
 		}
-		if (("not").startsWith(String.valueOf((char) curChar))) {
+		if (("not").equals(curString)) {
 			curToken = Token.NOT;
-			while(curString.length() < "not".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("not")) {
-				throw new ParseException("Expected " + "not", curPos);
-			}
 		}
-		else if (("or").startsWith(String.valueOf((char) curChar))) {
+		else if (("or").equals(curString)) {
 			curToken = Token.OR;
-			while(curString.length() < "or".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("or")) {
-				throw new ParseException("Expected " + "or", curPos);
-			}
 		}
-		else if (("and").startsWith(String.valueOf((char) curChar))) {
+		else if (("and").equals(curString)) {
 			curToken = Token.AND;
-			while(curString.length() < "and".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("and")) {
-				throw new ParseException("Expected " + "and", curPos);
-			}
 		}
-		else if (("(").startsWith(String.valueOf((char) curChar))) {
+		else if (("(").equals(curString)) {
 			curToken = Token.LPAREN;
-			while(curString.length() < "(".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("(")) {
-				throw new ParseException("Expected " + "(", curPos);
-			}
 		}
-		else if (("xor").startsWith(String.valueOf((char) curChar))) {
+		else if (("xor").equals(curString)) {
 			curToken = Token.XOR;
-			while(curString.length() < "xor".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("xor")) {
-				throw new ParseException("Expected " + "xor", curPos);
-			}
 		}
-		else if ((")").startsWith(String.valueOf((char) curChar))) {
+		else if ((")").equals(curString)) {
 			curToken = Token.RPAREN;
-			while(curString.length() < ")".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals(")")) {
-				throw new ParseException("Expected " + ")", curPos);
-			}
 		}
-		else if (("b").startsWith(String.valueOf((char) curChar))) {
-			curToken = Token.TERM;
-			while(curString.length() < "b".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("b")) {
-				throw new ParseException("Expected " + "b", curPos);
-			}
+		else if (curString.matches("[a-zA-Z][a-zA-Z0-9]*")) {
+			curToken = Token.IDENT;
 		}
-		else if (("c").startsWith(String.valueOf((char) curChar))) {
-			curToken = Token.TERM;
-			while(curString.length() < "c".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("c")) {
-				throw new ParseException("Expected " + "c", curPos);
-			}
+
+		else if (curString.matches("[0-9]")) {
+			curToken = Token.NUMBER;
 		}
-		else if (("d").startsWith(String.valueOf((char) curChar))) {
-			curToken = Token.TERM;
-			while(curString.length() < "d".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("d")) {
-				throw new ParseException("Expected " + "d", curPos);
-			}
-		}
-		else if (("e").startsWith(String.valueOf((char) curChar))) {
-			curToken = Token.TERM;
-			while(curString.length() < "e".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("e")) {
-				throw new ParseException("Expected " + "e", curPos);
-			}
-		}
-		else if (("f").startsWith(String.valueOf((char) curChar))) {
-			curToken = Token.TERM;
-			while(curString.length() < "f".length()) {
-				curString += (char) curChar;
-				nextChar();
-			}
-			if(!curString.equals("f")) {
-				throw new ParseException("Expected " + "f", curPos);
-			}
-		}
-		else throw new AssertionError("Illegal character " + curChar);
+
+		else throw new AssertionError("Illegal character " + (char) curChar + "\n ans CURSTRING: " + curString);
 	}
 }

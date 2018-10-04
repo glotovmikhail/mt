@@ -11,7 +11,7 @@ import lab4.Tree;
 }
 
 start -> String
-        : VAR vars[{""}] BEGIN code END DOT {return vars.get(0) + "\nint main() {\n" + code.get(0) + "\n}";}
+        : VAR vars[{""}] BEGIN code END DOT {return vars.get(0) + "\nint main() {\n\t" + code.get(0) + "}";}
         ;
 
 code -> String
@@ -33,7 +33,7 @@ writestate -> String
         ;
 
 assignstate -> String
-        : variable COLON RAVNO number[{0}] {return variable.get(0) + " = " + number.get(0);}
+        : variable ASSIGN NUMBER {return variable.get(0) + " = " + NUMBER.get(0);}
         ;
 
 vars [String cur] -> String
@@ -42,30 +42,12 @@ vars [String cur] -> String
         ;
 
 line -> String
-        : declvariable type SEMI {return type.get(0) + " " + declvariable.get(0) + ";\n";}
+        : IDENT COLON type SEMI {return type.get(0) + " " + IDENT.get(0) + ";\n";}
         ;
 
 variable -> String
-        : word[{""}] {return word.get(0);}
+        : IDENT {return IDENT.get(0);}
         ;
-
-declvariable -> String
-        : word[{""}] COLON {return word.get(0);}
-        ;
-
-word [String input] -> String
-        : IDENT word[{input + IDENT.get(0)}] {return word.get(0);}
-        | {return input;}
-        ;
-
-number[Integer i] -> Integer
-    : NUMBER number_prime[{10*i + Integer.parseInt(NUMBER.get(0))}] {return number_prime.get(0);}
-    ;
-
-number_prime[Integer i] -> Integer
-    : {return i;}
-    | number[{i}] {return number.get(0);}
-    ;
 
 type -> String
         : STRING {return "char*";}
@@ -81,6 +63,7 @@ DOT     : '.';
 SEMI    : ';';
 COMMA   : ',';
 COLON   : ':';
+ASSIGN  : ':=';
 RAVNO   : '=';
 WRITE   : 'write';
 READ    : 'read';
@@ -91,6 +74,6 @@ VAR     : 'var';
 PLUS    : '+';
 MINUS   : '-';
 
-IDENT   : 'a' | 'c' | 'd' | 'f' | 'g' | 'h' | 'j' | 'k' | 'l' | 'm' | 'n';
+IDENT   : '[a-zA-Z]+';
 
-NUMBER : '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+NUMBER : '[1-9][0-9]*';

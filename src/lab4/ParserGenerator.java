@@ -187,7 +187,6 @@ public class ParserGenerator {
                 "\t\tcurPos++;" + "\n" +
                 "\t\ttry {" + "\n" +
                 "\t\t\tcurChar = is.read();\n" +
-                "\t\t\tif (isBlank(curChar)) nextChar();" +
                 "\t\t} catch (IOException e) {" + "\n" +
                 "\t\t\tthrow new ParseException(e.getMessage(), curPos);" + "\n" +
                 "\t\t}\n" +
@@ -195,33 +194,53 @@ public class ParserGenerator {
                 "\tpublic Token curToken() {\n\t\treturn curToken;\n\t}\n" + "\n" +
                 "\tpublic int curPos() {\n\t\treturn curPos;\n\t}\n" + "\n" +
                 "\tpublic String curString() {\n\t\treturn curString;\n\t}\n" + "\n" +
+                "\tpublic String eat() throws IOException, ParseException {\n" +
+                "\t    String ans = \"\";\n" +
+                "        if (curChar == -1) return \"@eof\";\n" +
+                "        if (curChar == '(' || curChar == ')' || curChar == ';' || curChar == '.') {\n" +
+                "\t\t\tans = \"\" + (char) curChar;\n" +
+                "\t\t\tnextChar();\n" +
+                "            return ans;\n" +
+                "        }\n" +
+                "\t    while (!isBlank(curChar)) {\n" +
+                "\t        if (curChar == '(' || curChar == ')' || curChar == ';' || curChar == '.' || curChar == -1) break;\n" +
+                "\t        ans += (char) curChar;\n" +
+                "\t        nextChar();\n" +
+                "        }\n" +
+                "        while (isBlank(curChar)) {\n" +
+                "\t        nextChar();\n" +
+                "        }\n" +
+                "\t\tif (ans.equals(\"\")) return eat();\n" +
+                "\t    return ans;\n" +
+                "    }\n\n" +
                 "\tpublic void nextToken() throws ParseException, IOException {" + "\n" +
-                "\t\tcurString = \"\";" + "\n" +
-                "\t\tif (curChar == -1) {" + "\n" +
+                "\t\tcurString = eat();" + "\n" +
+                "\t\tif (curString.equals(\"@eof\")) {" + "\n" +
                 "\t\t\tcurToken = Token.EOF;" + "\n" +
                 "\t\t\treturn;" + "\n" +
                 "\t\t}" + "\n");
         boolean first = true;
         for (String curStringTerminal : terminals.keySet()) {
+            if (curStringTerminal.equals("IDENT") || curStringTerminal.equals("NUMBER")) continue;
             for (Produce productionString : terminals.get(curStringTerminal).getProductList()) {
                 out.println(String.format(
                         (first ? "\t\tif" : "\t\telse if") +
-                                " ((\"%1$s\").startsWith(String.valueOf((char) curChar))) {\n" +
+                                " ((\"%1$s\").equals(curString)) {\n" +
                                 "\t\t\tcurToken = Token.%2$s;\n" +
-                                "\t\t\twhile(curString.length() < \"%1$s\".length()) {\n" +
-                                "\t\t\t\tcurString += (char) curChar;\n" +
-                                "\t\t\t\tnextChar();\n" +
-                                "\t\t\t}\n" +
-                                "\t\t\tif(!curString.equals(\"%1$s\")) {\n" +
-                                "\t\t\t\tthrow new ParseException(\"Expected \" + \"%1$s\", curPos);\n" +
-                                "\t\t\t}\n" +
                                 "\t\t}",
                         productionString.get(0).getName(), curStringTerminal.toUpperCase()
                 ));
                 first = false;
             }
         }
-        out.print("\t\telse throw new AssertionError(\"Illegal character \" + curChar);" + "\n" +
+
+        out.println(String.format("\t\telse if (curString.matches(\"%1$s\")) {\n" +
+                "\t\t\tcurToken = Token.IDENT;\n" +
+                "\t\t}\n", terminals.get("IDENT").getProductList().get(0).get(0).getName()));
+        out.println(String.format("\t\telse if (curString.matches(\"%1$s\")) {\n" +
+                "\t\t\tcurToken = Token.NUMBER;\n" +
+                "\t\t}\n", terminals.get("NUMBER").getProductList().get(0).get(0).getName()));
+        out.print("\t\telse throw new AssertionError(\"Illegal character \" + (char) curChar + \"\\n ans CURSTRING: \" + curString);" + "\n" +
                 "\t}\n}" + "\n");
         out.close();
     }

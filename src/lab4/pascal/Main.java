@@ -8,7 +8,7 @@ public class Main {
 		InputStream is = new FileInputStream(new File("src/lab4/pascal/input.txt"));
 		Tree result = (new pascalParser()).parse(is);
 BufferedWriter bw = new BufferedWriter(new FileWriter("src/lab4/pascal/pascal.dot"));
-result.printTree(0, bw);
-bw.flush();
+        result.printTree(0, bw);
+        bw.flush();
 	}
 }

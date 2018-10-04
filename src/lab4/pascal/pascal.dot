@@ -3,15 +3,15 @@ graph g {
 	"895328852Eo1" [shape=circle, style=filled, fillcolor="lightblue", label="Eo"];
 	"1304836502Ea2" [shape=circle, style=filled, fillcolor="lightblue", label="Ea"];
 	"225534817TERM3" [shape=circle, style=filled, fillcolor="lightblue", label="TERM"];
-	"1878246837b4" [shape=circle, style=filled, fillcolor="lightblue", label="b"];
-	"225534817TERM3" -- "1878246837b4";
-	{ rank=same"1878246837b4" }
+	"1878246837a4" [shape=circle, style=filled, fillcolor="lightblue", label="a"];
+	"225534817TERM3" -- "1878246837a4";
+	{ rank=same"1878246837a4" }
 	"929338653AND3" [shape=circle, style=filled, fillcolor="lightblue", label="AND"];
 	"1259475182and4" [shape=circle, style=filled, fillcolor="lightblue", label="and"];
 	"1300109446TERM4" [shape=circle, style=filled, fillcolor="lightblue", label="TERM"];
-	"1020371697d5" [shape=circle, style=filled, fillcolor="lightblue", label="d"];
-	"1300109446TERM4" -- "1020371697d5";
-	{ rank=same"1020371697d5" }
+	"1020371697safgd5" [shape=circle, style=filled, fillcolor="lightblue", label="safgd"];
+	"1300109446TERM4" -- "1020371697safgd5";
+	{ rank=same"1020371697safgd5" }
 	"789451787Ea'4" [shape=circle, style=filled, fillcolor="lightblue", label="Ea'"];
 	"929338653AND3" -- "1259475182and4";
 	"929338653AND3" -- "1300109446TERM4";
@@ -20,12 +20,47 @@ graph g {
 	"1304836502Ea2" -- "225534817TERM3";
 	"1304836502Ea2" -- "929338653AND3";
 	{ rank=same"225534817TERM3","929338653AND3" }
-	"1950409828Eo'2" [shape=circle, style=filled, fillcolor="lightblue", label="Eo'"];
+	"1950409828OR2" [shape=circle, style=filled, fillcolor="lightblue", label="OR"];
+	"1229416514or3" [shape=circle, style=filled, fillcolor="lightblue", label="or"];
+	"2016447921Ea3" [shape=circle, style=filled, fillcolor="lightblue", label="Ea"];
+	"666988784TERM4" [shape=circle, style=filled, fillcolor="lightblue", label="TERM"];
+	"1414644648sdfvdfg5" [shape=circle, style=filled, fillcolor="lightblue", label="sdfvdfg"];
+	"666988784TERM4" -- "1414644648sdfvdfg5";
+	{ rank=same"1414644648sdfvdfg5" }
+	"640070680Ea'4" [shape=circle, style=filled, fillcolor="lightblue", label="Ea'"];
+	"2016447921Ea3" -- "666988784TERM4";
+	"2016447921Ea3" -- "640070680Ea'4";
+	{ rank=same"666988784TERM4","640070680Ea'4" }
+	"1510467688Eo'3" [shape=circle, style=filled, fillcolor="lightblue", label="Eo'"];
+	"1950409828OR2" -- "1229416514or3";
+	"1950409828OR2" -- "2016447921Ea3";
+	"1950409828OR2" -- "1510467688Eo'3";
+	{ rank=same"1229416514or3","2016447921Ea3","1510467688Eo'3" }
 	"895328852Eo1" -- "1304836502Ea2";
-	"895328852Eo1" -- "1950409828Eo'2";
-	{ rank=same"1304836502Ea2","1950409828Eo'2" }
-	"1229416514Ex'1" [shape=circle, style=filled, fillcolor="lightblue", label="Ex'"];
+	"895328852Eo1" -- "1950409828OR2";
+	{ rank=same"1304836502Ea2","1950409828OR2" }
+	"1995265320XOR1" [shape=circle, style=filled, fillcolor="lightblue", label="XOR"];
+	"746292446xor2" [shape=circle, style=filled, fillcolor="lightblue", label="xor"];
+	"1072591677Eo2" [shape=circle, style=filled, fillcolor="lightblue", label="Eo"];
+	"1523554304Ea3" [shape=circle, style=filled, fillcolor="lightblue", label="Ea"];
+	"1175962212TERM4" [shape=circle, style=filled, fillcolor="lightblue", label="TERM"];
+	"918221580adsfasdfb5" [shape=circle, style=filled, fillcolor="lightblue", label="adsfasdfb"];
+	"1175962212TERM4" -- "918221580adsfasdfb5";
+	{ rank=same"918221580adsfasdfb5" }
+	"2055281021Ea'4" [shape=circle, style=filled, fillcolor="lightblue", label="Ea'"];
+	"1523554304Ea3" -- "1175962212TERM4";
+	"1523554304Ea3" -- "2055281021Ea'4";
+	{ rank=same"1175962212TERM4","2055281021Ea'4" }
+	"1554547125Eo'3" [shape=circle, style=filled, fillcolor="lightblue", label="Eo'"];
+	"1072591677Eo2" -- "1523554304Ea3";
+	"1072591677Eo2" -- "1554547125Eo'3";
+	{ rank=same"1523554304Ea3","1554547125Eo'3" }
+	"617901222Ex'2" [shape=circle, style=filled, fillcolor="lightblue", label="Ex'"];
+	"1995265320XOR1" -- "746292446xor2";
+	"1995265320XOR1" -- "1072591677Eo2";
+	"1995265320XOR1" -- "617901222Ex'2";
+	{ rank=same"746292446xor2","1072591677Eo2","617901222Ex'2" }
 	"723074861Ex0" -- "895328852Eo1";
-	"723074861Ex0" -- "1229416514Ex'1";
-	{ rank=same"895328852Eo1","1229416514Ex'1" }
+	"723074861Ex0" -- "1995265320XOR1";
+	{ rank=same"895328852Eo1","1995265320XOR1" }
 }
