@@ -1,7 +1,5 @@
-int dfgsdf;
-int fvsdfvbsdg;
+int sfsf;
 
 int main() {
-	sdfgsdf = 123124;
-fdgdfgsdf = 444;
+	sfsarf = 2134124;
 }

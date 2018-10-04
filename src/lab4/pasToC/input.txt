@@ -1,7 +1,5 @@
 var
-    dfgsdf : integer;
-    fvsdfvbsdg : integer;
+    sfsf : integer;
 begin
-    sdfgsdf := 123124;
-    fdgdfgsdf := 444;
+    sfsarf := 2134124;
 end.

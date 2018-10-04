@@ -50,7 +50,7 @@ public class pasToCLexer {
             return ans;
         }
 	    while (!isBlank(curChar)) {
-	        if (curChar == '(' || curChar == ')' || curChar == ';' || curChar == '.') break;
+	        if (curChar == '(' || curChar == ')' || curChar == ';' || curChar == '.' || curChar == -1) break;
 	        ans += (char) curChar;
 	        nextChar();
         }
